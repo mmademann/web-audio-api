@@ -1,3 +1,3 @@
-## Web Audio Api Project
+## Audio Api Project
 
-# A series of tests and experiments
+Controllable `oscillators` using the Web Audio API in a basic React app
