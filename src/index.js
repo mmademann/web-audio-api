@@ -25,17 +25,17 @@ const Controls = (props) => (
 		</div>
 		<div className="control-row">
 				<p>Frequency:</p>
-				<input 
-					type="range" min="100" max="1450" 
-					defaultValue={props.frequency} 
+				<input
+					type="range" min="100" max="1450"
+					defaultValue={props.frequency}
 					onInput={props.changeFrequency}>
 				</input>
 		</div>
 		<div className="control-row">
 				<p>Fine Tune:</p>
-				<input 
-					type="range" min="-100" max="100" 
-					defaultValue="100" 
+				<input
+					type="range" min="-100" max="100"
+					defaultValue="100"
 					onInput={props.finetuneFrequency}>
 				</input>
 		</div>
@@ -64,10 +64,10 @@ class Oscillator extends React.Component {
 
 	// stops the oscillator
 	stopOscillator = () => {
-		if (this.oscillator) this.oscillator.stop(); 
+		if (this.oscillator) this.oscillator.stop();
 	};
 
-	// changes the wave type of the oscillator 
+	// changes the wave type of the oscillator
 	waveType = (event) => {
 		if (this.oscillator) this.oscillator.type = event.target.value;
 	};
@@ -117,5 +117,5 @@ const AudioContainer = (props) => {
 
 ReactDOM.render(
 	<AudioContainer />,
-	document.getElementById('root') 
+	document.getElementById('root')
 );
