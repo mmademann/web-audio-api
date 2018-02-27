@@ -2,133 +2,64 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import helpers from './helpers';
-import registerServiceWorker from './registerServiceWorker';
 
-function Square(props) {
-  return (
-    <button className="square effect-pop" onClick={props.onClick}>
-      {props.value}
-    </button>
-  );
-}
-
-class Board extends React.Component {
-  renderSquare(i) {
+class Instrument extends React.Component {
+  render() {
     return (
-      <Square
-        value={this.props.squares[i]}
-        onClick={() => this.props.onClick(i)}
-      />
+      <div>
+        <div className="instrument-row">
+          <button className="effect-pop" onClick={this.props.onClickStartTone}>Start</button>
+          <button className="effect-pop" onClick={this.props.onClickEndTone}>Stop</button>
+        </div>
+      </div>
     );
   }
+}
+
+class Audio extends React.Component {
+  constructor(props) {
+    super(props);
+    const oscillatorNodeContext = new AudioContext();
+    this.state = {
+      oscillatorNodeContext: oscillatorNodeContext,
+      oscillatorNode: null
+    }
+  }
+
+	startTone() {
+	  this.state.oscillatorNodeContext.resume();
+	  if(this.state.oscillatorNode) this.state.oscillatorNode.stop();
+	  this.state.oscillatorNode = this.state.oscillatorNodeContext.createOscillator();
+	  this.state.oscillatorNode.connect(this.state.oscillatorNodeContext.destination);
+	  this.state.oscillatorNode.start();
+	}
+
+	endTone(step) {
+	  if (this.state.oscillatorNode) this.state.oscillatorNode.stop();
+	}
+	changeTo(type) {
+	  this.state.oscillatorNode.type = type;
+	}
+	changeFrequency(frequency) {
+	  this.state.oscillatorNode.frequency.setValueAtTime(Math.pow(2, frequency / 100), this.state.oscillatorNodeContext.currentTime);
+	}
+	changeDetune(detune) {
+	  this.state.oscillatorNode.detune.setValueAtTime(detune, this.state.oscillatorNodeContext.currentTime);
+	}
 
   render() {
     return (
       <div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
-      </div>
-    );
-  }
-}
-
-class Game extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      history: [{
-        squares: Array(9).fill(null),
-      }],
-      stepNumber: 0,
-      location: {
-        row:null,
-        col:null,
-      },
-      xIsNext: true,
-    };
-  }
-
-  handleClick(i) {
-    const history = this.state.history.slice(0, this.state.stepNumber + 1);
-    const current = history[history.length - 1];
-    const squares = current.squares.slice();
-
-    if (helpers.calculateWinner(squares) || squares[i]) {
-      return;
-    }
-    
-    squares[i] = this.state.xIsNext ? 'X' : 'O';
-
-    this.setState({
-      history: history.concat([{
-        squares: squares,
-      }]),
-      'stepNumber': history.length,
-      xIsNext: !this.state.xIsNext,
-    });
-  }
-
-  jumpTo(step) {
-    this.setState({
-      stepNumber: step,
-      xIsNext: (step % 2) === 0,
-    });
-  }
-
-  render() {
-    const history = this.state.history;
-    const current = history[this.state.stepNumber];
-    const winner = helpers.calculateWinner(current.squares);
-
-    const moves = history.map((step, move) => {
-      const desc = move ? 'Go to move #' + move : 'Go to the start';
-      return ( 
-        <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
-        </li>
-      );
-    });
-
-    let status;
-    if (winner) {
-      status = 'Winner: ' + winner;
-    } else {
-      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
-    }
-
-    return (
-      <div className="game">
-        <div className="game-board">
-          <Board
-            squares={current.squares}
-            onClick={(i) => this.handleClick(i)}
-          />
-        </div>
-        <div className="game-info">
-          <div className="status">{status}</div>
-          <ol>{moves}</ol>
-        </div>
-      </div>
+      	<Instrument
+      	  onClickStartTone={(i) => this.startTone(i)}
+      	  onClickEndTone={(i) => this.endTone(i)}
+      	/>
+	    </div>
     );
   }
 }
 
 ReactDOM.render(
-  <Game />,
+  <Audio />,
   document.getElementById('root') 
 );
-
-registerServiceWorker();

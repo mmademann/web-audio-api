@@ -8,10 +8,17 @@ ol, ul {
   padding-left: 30px;
 }
 
-.board-row:after {
+.instrument-row:after {
   clear: both;
   content: "";
   display: table;
+}
+
+.instrument-row button {
+	padding:20px;
+	margin:20px;
+	font-size: 16px;
+	cursor: pointer;
 }
 
 .status {
@@ -64,13 +71,16 @@ ol, ul {
 
 .effect-pop {
 	transition: all .6s ease;
-	transform: translate(0%,0%);
 }
 
 .effect-pop:hover {
-	background: #7FDBFF;
+	background: #777;
 	transition: all .3s ease-in-out;
-	transform: translate(-4%,-4%);
+	/*transform: translate(-4%,-4%);*/
+}
+
+.audio {
+	margin-bottom:30px;
 }
 
 
