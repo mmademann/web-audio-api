@@ -24,20 +24,20 @@ const Controls = (props) => (
 			<button value="square" onClick={props.waveType}>Square</button>
 		</div>
 		<div className="control-row">
-				<p>Frequency:</p>
-				<input
-					type="range" min="100" max="1450"
-					defaultValue={props.frequency}
-					onInput={props.changeFrequency}>
-				</input>
+			<p>Frequency:</p>
+			<input
+				type="range" min="100" max="1450"
+				defaultValue={props.frequency}
+				onInput={props.changeFrequency}>
+			</input>
 		</div>
 		<div className="control-row">
-				<p>Fine Tune:</p>
-				<input
-					type="range" min="-100" max="100"
-					defaultValue="100"
-					onInput={props.finetuneFrequency}>
-				</input>
+			<p>Fine Tune:</p>
+			<input
+				type="range" min="-100" max="100"
+				defaultValue="100"
+				onInput={props.finetuneFrequency}>
+			</input>
 		</div>
 	</div>
 );
@@ -101,7 +101,7 @@ class Oscillator extends React.Component {
 // main oscillator wrapper
 // creates an oscillator for each frequency
 const AudioContainer = (props) => {
-	const frequencies = [220, 138, 164, 440, 494]; //A C# E A D(A Major)
+const frequencies = [220, 138, 164, 440, 494]; //A C# E A D(A Major)
 	return (
 		<div>
 			<p>Oscillations</p>
