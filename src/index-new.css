@@ -1,6 +1,6 @@
 body {
-  font: 14px "Century Gothic", Futura, sans-serif;
-  margin: 20px;
+	font: 14px "Century Gothic", Futura, sans-serif;
+	margin: 20px;
 }
 
 body p {
@@ -21,9 +21,9 @@ body p {
 }
 
 .control-row:after {
-  clear: both;
-  content: "";
-  display: table;
+	clear: both;
+	content: "";
+	display: table;
 }
 
 .control-row p {
