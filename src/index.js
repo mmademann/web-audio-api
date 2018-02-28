@@ -62,6 +62,14 @@ const Frequency = (props) => {
 					onInput={props.tuneFrequency}>
 				</input>
 			</div>
+			<div className="control-row">
+				<p>Volume</p>
+				<input
+					type="range" min="-150" max="150"
+					defaultValue="50"
+					onInput={props.changeGain}>
+				</input>
+			</div>
 		</div>
 	)
 }
@@ -81,6 +89,11 @@ class Oscillator extends React.Component {
 		AUDIO_CONTEXT.resume();
 		if (this.oscillator) this.oscillator.stop();
 		this.oscillator = AUDIO_CONTEXT.createOscillator();
+		this.gainNode = AUDIO_CONTEXT.createGain();
+
+		this.oscillator.connect(this.gainNode);
+		this.gainNode.connect(AUDIO_CONTEXT.destination);
+
 		this.oscillator.frequency.setValueAtTime(
 			this.props.frequency,
 			AUDIO_CONTEXT.currentTime
@@ -119,6 +132,17 @@ class Oscillator extends React.Component {
 		}
 	};
 
+	changeGain = (event) => {
+		console.log('event.target.value',event.target.value);
+		console.log(event.target.value);
+		if (this.gainNode) {
+			this.gainNode.gain.setValueAtTime(
+				(parseInt(event.target.value, 10) / 100),
+				AUDIO_CONTEXT.currentTime
+			);
+		}
+	};
+
 	render() {
 		return (
 			<div className="oscillator-row">
@@ -129,6 +153,7 @@ class Oscillator extends React.Component {
 				<Frequency
 					frequency={ this.props.frequency }
 					changeFrequency={ this.changeFrequency }
+					changeGain={ this.changeGain }
 					tuneFrequency={ this.tuneFrequency } />
 			</div>
 		);
