@@ -1,19 +1,22 @@
 body {
 	font: 14px "Century Gothic", Futura, sans-serif;
 	margin: 20px;
+	background: #f4f4f4;
 }
 
 body p {
-	color:#666;
+	color:#888;
 }
 
 .oscillator-row {
-	border:1px solid #f2f2f2;
+	border:2px solid #fff;
 	margin: 1%;
-	padding: 10px;
+	padding: 12px;
 	background: #fff;
+	border-radius: 6px;
 	display:inline-block;
 	min-width:320px;
+	background:#f9f9f9;
 }
 
 .control-row {
@@ -33,20 +36,27 @@ body p {
 .control-row button {
 	margin: 4px 0px 4px 6px;
 	padding:6px 14px;
-	font-size: 16px;
+	font-size: 14px;
 	cursor: pointer;
 	font-weight: 700;
 	border-radius: 5px;
 	color:#808080;
 }
 
-.control-row button:hover {
+.control-row button:hover,
+.control-row button:focus {
 	background: #f2f2f2;
 	transition: all .3s ease-in-out;
+	outline:0;
 }
 
 .control-row input {
 	width:90%;
+}
+
+.control-row input:focus {
+	width:90%;
+	outline:0;
 }
 
 .control-row p {
