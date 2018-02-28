@@ -179,5 +179,5 @@ const AudioContainer = (props) => {
 
 ReactDOM.render(
 	<AudioContainer />,
-	document.getElementById('root')
+	document.getElementById('app')
 );
