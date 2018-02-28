@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
-// find the correct Audio Context from the browser
-// AudioContext constant - contains all audio and oscillator nodes
+// find the right Audio Context from the browser
+// AUDIO_CONTEXT - contains all audio and oscillator nodes
 const AudioContext = window.AudioContext || window.webkitAudioContext || null;
 const AUDIO_CONTEXT = new AudioContext();
 
-// returns the oscillator controls
+// stop/start buttons
 const Playback = (props) => {
 	return (
 		<div className="control-row">
@@ -16,6 +16,7 @@ const Playback = (props) => {
 	)
 }
 
+//waveform buttons
 const WaveType = (props) => {
 	return (
 		<div className="control-row">
@@ -40,6 +41,7 @@ const WaveType = (props) => {
 	)
 }
 
+// frequency & tune range inputs
 const Frequency = (props) => {
 	return (
 		<div>
@@ -73,8 +75,14 @@ const Frequency = (props) => {
 
 // oscillator component w/ audio controls
 class Oscillator extends Component {
+	constructor(props) {
+	  	super(props);
+	  	this.state = {
+	  		frequency: props.frequency
+	  	};
+	}
 
-	oscillator = null;
+	oscillator = null
 
 	// stops the oscillator if removed
 	componentWillUnmount() {
@@ -83,18 +91,20 @@ class Oscillator extends Component {
 
 	componentDidMount() {}
 
+	shouldComponentUpdate(nextProps, nextState) {
+		return false;
+	}
+
 	// creates the oscillator
 	startOscillator = () => {
 		AUDIO_CONTEXT.resume();
 		if (this.oscillator) this.oscillator.stop();
 		this.oscillator = AUDIO_CONTEXT.createOscillator();
 		this.gainNode = AUDIO_CONTEXT.createGain();
-
 		this.oscillator.connect(this.gainNode);
 		this.gainNode.connect(AUDIO_CONTEXT.destination);
-
 		this.oscillator.frequency.setValueAtTime(
-			this.props.frequency,
+			this.state.frequency,
 			AUDIO_CONTEXT.currentTime
 		);
 		this.oscillator.connect(AUDIO_CONTEXT.destination);
