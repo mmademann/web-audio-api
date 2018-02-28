@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './index.css';
 
 // find the correct Audio Context from the browser
 // AudioContext constant - contains all audio and oscillator nodes
