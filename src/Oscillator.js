@@ -128,6 +128,9 @@ class Oscillator extends Component {
 				Math.pow(2, event.target.value / 100),
 				AUDIO_CONTEXT.currentTime
 			);
+			this.setState({
+				frequency: event.target.value
+			});
 		}
 	}
 
@@ -151,6 +154,7 @@ class Oscillator extends Component {
 	}
 
 	render() {
+
 		return (
 			<div className="oscillator-row">
 				<Playback
