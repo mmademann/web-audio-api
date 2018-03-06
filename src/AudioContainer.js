@@ -15,6 +15,6 @@ const AudioContainer = () => (
 			))
 		}
 	</div>
-}
+)
 
 export default AudioContainer;
